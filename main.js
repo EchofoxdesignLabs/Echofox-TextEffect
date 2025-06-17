@@ -85,12 +85,13 @@ function init() {
     'assets/fonts/Redcollar_Regular.json',
     font => {
       let x = 0;
-      for (let c of 'echofox') {
+      const str = `let's connect`;
+      for (let c of str) {
         if (c===' ') { x+=500; continue; }
         const geo = new TextGeometry(c, {
-          font, size:1000, height:1,
-          bevelEnabled:true, bevelThickness:5, bevelSize:5,
-          curveSegments:12
+          font, size:500, height:1,
+          bevelEnabled:true, bevelThickness:10, bevelSize:10,
+          curveSegments:100
         });
         geo.computeBoundingBox();
 
@@ -100,7 +101,7 @@ function init() {
             uMousePos:       {value:new THREE.Vector3()},
             uHoverState:     {value:0},
             uNoiseFrequency: {value:0.005},
-            uNoiseAmplitude: {value:40}
+            uNoiseAmplitude: {value:30}
           },
           vertexShader: vs,
           fragmentShader: fs
