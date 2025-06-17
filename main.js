@@ -60,6 +60,7 @@ function init() {
   rendererFX = new THREE.WebGLRenderer({antialias:true, alpha:true});
   rendererFX.setPixelRatio(devicePixelRatio);
   rendererFX.setSize(innerWidth, innerHeight);
+  rendererFX.outputColorSpace = THREE.SRGBColorSpace;
   rendererFX.domElement.style.position = 'absolute';
   rendererFX.domElement.style.top      = '0';
   rendererFX.domElement.style.left     = '0';
@@ -81,7 +82,7 @@ function init() {
   scene.add(textGroup);
 
   new FontLoader().load(
-    'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json',
+    'assets/fonts/Redcollar_Regular.json',
     font => {
       let x = 0;
       for (let c of 'echofox') {
