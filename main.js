@@ -51,9 +51,10 @@ function init() {
   camera.position.set(0,0,12000);
 
   // 2) Main renderer (draws ALL glyphs)
-  rendererMain = new THREE.WebGLRenderer({antialias:true, alpha:false});
+  rendererMain = new THREE.WebGLRenderer({antialias:true, alpha:true});
   rendererMain.setPixelRatio(devicePixelRatio);
   rendererMain.setSize(innerWidth, innerHeight);
+  rendererMain.setClearColor(0x000000, 0);
   document.body.appendChild(rendererMain.domElement);
 
   // 3) FX renderer overlay (draws only hovered)
@@ -65,6 +66,7 @@ function init() {
   rendererFX.domElement.style.top      = '0';
   rendererFX.domElement.style.left     = '0';
   rendererFX.domElement.style.pointerEvents = 'none';
+  rendererFX.setClearColor(0x000000, 0)
   document.body.appendChild(rendererFX.domElement);
 
   // 4) Controls
@@ -109,7 +111,7 @@ function init() {
 
         const mesh = new THREE.Mesh(geo, mat);
         mesh.position.x = x;
-        x += geo.boundingBox.max.x - geo.boundingBox.min.x + 100;
+        x += geo.boundingBox.max.x - geo.boundingBox.min.x + 50;
         textGroup.add(mesh);
       }
 
