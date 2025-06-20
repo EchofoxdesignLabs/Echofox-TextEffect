@@ -48,13 +48,17 @@ function init() {
   scene      = new THREE.Scene();
   hoverScene = new THREE.Scene();
   camera     = new THREE.PerspectiveCamera(14, innerWidth/innerHeight, 0.01, 100000);
-  camera.position.set(0,0,12000);
+  camera.position.set(0,0,10000);
 
   // 2) Main renderer (draws ALL glyphs)
   rendererMain = new THREE.WebGLRenderer({antialias:true, alpha:true});
   rendererMain.setPixelRatio(devicePixelRatio);
   rendererMain.setSize(innerWidth, innerHeight);
   rendererMain.setClearColor(0x000000, 0);
+  rendererMain.outputColorSpace = THREE.SRGBColorSpace;
+  rendererMain.domElement.style.position = 'absolute';
+  rendererMain.domElement.style.top      = '0';
+  rendererMain.domElement.style.left     = '0';
   document.body.appendChild(rendererMain.domElement);
 
   // 3) FX renderer overlay (draws only hovered)
@@ -115,15 +119,30 @@ function init() {
         textGroup.add(mesh);
       }
 
-      // center group
-      const box = new THREE.Box3().setFromObject(textGroup);
-      const s   = box.getSize(new THREE.Vector3());
-      textGroup.position.x = -s.x/2;
+      // Align the text to the left instead of centering
+      alignTextLeft();
+      // // center group
+      // const box = new THREE.Box3().setFromObject(textGroup);
+      // const s   = box.getSize(new THREE.Vector3());
+      // textGroup.position.x = -s.x/2;
     }
   );
 
   window.addEventListener('resize', onResize);
   window.addEventListener('mousemove', onMouseMove);
+}
+// This function calculates the left edge of the screen and aligns the text.
+function alignTextLeft() {
+    if (!textGroup || textGroup.children.length === 0) return;
+    
+    // Calculate the visible width of the scene at the camera's distance
+    const vFOV = THREE.MathUtils.degToRad(camera.fov);
+    const distance = camera.position.z; // Since text is at z=0
+    const height = 2 * Math.tan(vFOV / 2) * distance;
+    const width = height * camera.aspect;
+
+    // Position the text group so its origin is at the left edge of the viewport
+    textGroup.position.x = -width / 2;
 }
 
 function onResize() {
@@ -132,6 +151,8 @@ function onResize() {
   rendererMain.setSize(innerWidth, innerHeight);
   rendererFX.setSize(innerWidth, innerHeight);
   composerFX.setSize(innerWidth, innerHeight);
+  // Re-align the text when the window is resized
+  alignTextLeft();
 }
 
 function onMouseMove(e) {
