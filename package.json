@@ -1,6 +1,6 @@
 {
   "name": "threejs-fluid-text-effect",
-  "homepage": "https://abhijith-echofox.github.io/Echofox-TextEffect/",
+  "homepage": "https://EchofoxdesignLabs.github.io/Echofox-TextEffect/",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -r https://github.com/Abhijith-EchoFox/Echofox-TextEffect.git -f"
+    "deploy": "gh-pages -d dist -r https://github.com/EchofoxdesignLabs/Echofox-TextEffect.git -f"
   },
   "dependencies": {
     "gh-pages": "^6.3.0",
